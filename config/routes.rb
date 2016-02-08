@@ -1,9 +1,24 @@
 Rails.application.routes.draw do
+  devise_for :app_users, skip: [:sessions, :passwords, :registrations]
+  devise_for :admin_users, skip: [:registrations]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  namespace :api do
+    namespace :v1 do
+      devise_scope :app_user do
+        post 'sign_in' => 'sessions#create', :as => 'login'
+      end
+      #match 'sign_in' => 'sessions#create', :via => :post
+      match 'new_app_user' => 'app_users#create', :via => :post
+      match 'update_user' => 'app_users#update_app_user', :via => :post
+    end
+  end    
+
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'home#index'
+  resources :admin_users
+  resources :app_users
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

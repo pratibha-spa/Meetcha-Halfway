@@ -8,7 +8,46 @@
 </head>
 <body>
 
+<div class="top-notification-banner">
+		<% if current_admin_user %>
+    	<div><img height="150" src="<%= asset_path("meetcha_halfway_logo.png") %>" alt="Meetchahalfway"></div>
+	    <div class="nav-links">
+	    	<%= link_to "Admin Users", admin_users_path %>
+	    	<%= link_to "App Users", app_users_path %>
+	    </div>
+    <% end %>
+    <div class="login-status">
+    	<p class="navbar-text pull-right">
+				<% if admin_user_signed_in? %>
+		  		Logged in as <strong><%= current_admin_user.email %></strong>.
+		  		<%#= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> 
+		  		<%= link_to "Logout", destroy_admin_user_session_path, method: :delete, :class => 'navbar-link'  %>
+				<% else %>
+		  		<%#= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> 
+		  		<%#= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+				<% end %>
+			</p>
+    </div>
+</div>
+<div class="alert-wrapper">
+	<% if current_admin_user %>
+		<% if notice %>
+		  <p class="alert-banner alert-success"><%= notice %></p>
+		<% end %>
+		<% if alert %>
+		  <p class="alert-banner alert-danger"><%= alert %></p>
+		<% end %>
+	<% else %>
+		<% if notice %>
+		  <p class="alert alert-success"><%= notice %></p>
+		<% end %>
+		<% if alert %>
+		  <p class="alert alert-danger"><%= alert %></p>
+		<% end %>
+	<% end %>	
+</div>
 <%= yield %>
 
 </body>
 </html>
+

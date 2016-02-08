@@ -1,0 +1,43 @@
+<div class="current-page-banner">
+  <div id="current-page-item">All App Users</div>
+</div>
+<div class="index-list">
+<% if current_admin_user.role=='super_admin' || current_admin_user.role=='admin' %>
+  <!--<div class="pure-control-group search-box">
+      <input type="search" name="search-factory" placeholder="Search factories...">
+  </div>-->
+  <table cellpadding="10">
+    <thead>
+    <tr>
+      <th><strong>ID</strong></th>
+      <th><strong>Name</strong></th>
+      <th><strong>Email</strong></th>
+      <th><strong>MobileNo.</strong></th>
+      <th><strong>DeviceFlag</strong></th>
+      <!--<th><strong>AvatarURL</strong></th>-->
+      <th><strong>UnhashedPassword</strong></th>
+      <th><strong>DeviceToken</strong></th>
+      <th><strong>Action</strong></th>
+    </tr>
+    <thead>
+    <tbody>
+    <% @app_users.each do |app_user| %>
+      <tr>
+        <td><%= app_user.id %></td>
+        <td><%= app_user.app_user_name %></td>
+        <td><%= app_user.email %></td>
+        <td><%= app_user.mobile_no %></td>
+        <td><%= app_user.device_flag %></td>
+        <!--<td><%#= app_user.avatar.url %></td>-->
+        <td><%= app_user.unhashed_password %></td>
+        <td><%= app_user.device_token %></td>
+        <td><%= (link_to 'Edit', edit_app_user_path(app_user)) %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="alert-danger">You don't have permission to data.</p>
+<% end %>
+
+</div>

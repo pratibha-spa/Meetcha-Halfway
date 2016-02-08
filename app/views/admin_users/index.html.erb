@@ -1,0 +1,39 @@
+<div class="current-page-banner">
+  <div id="current-page-item">All Admin Users</div>
+</div>
+<div class="index-list">
+<% if current_admin_user.role=='super_admin' || current_admin_user.role=='admin' %>
+  <!--<div class="pure-control-group search-box">
+      <input type="search" name="search-factory" placeholder="Search factories...">
+  </div>-->
+  <table cellpadding="10">
+    <thead>
+    <tr>
+      <th><strong>ID</strong></th>
+      <th><strong>Name</strong></th>
+      <th><strong>Email</strong></th>
+      <th><strong>Role</strong></th>
+      <th><strong>Last Sign In Time</strong></th>
+      <th><strong>Last Sign In I.P.</strong></th>
+      <th><strong>Edit</strong></th>
+    </tr>
+    <thead>
+    <tbody>
+    <% @admin_users.each do |admin| %>
+      <tr>
+        <td><%= admin.id %></td>
+        <td><%= admin.name %></td>
+        <td><%= admin.email %></td>
+        <td><%= admin.role.humanize rescue '-'%></td>
+        <td><%= admin.last_sign_in_at || 'Never'%></td>
+        <td><%= admin.last_sign_in_ip || '/' %></td>
+        <td><%= (link_to 'Edit', edit_admin_user_path(admin)) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="alert-danger">You don't have permission to data.</p>
+<% end %>
+
+</div>
