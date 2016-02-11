@@ -9,9 +9,9 @@ Rails.application.routes.draw do
       devise_scope :app_user do
         post 'sign_in' => 'sessions#create', :as => 'login'
       end
-      #match 'sign_in' => 'sessions#create', :via => :post
       match 'new_app_user' => 'app_users#create', :via => :post
       match 'update_user' => 'app_users#update_app_user', :via => :post
+      match 'search_contact' => 'search_contacts#search_through_contact', :via => :post
     end
   end    
 
