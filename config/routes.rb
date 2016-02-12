@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       match 'new_app_user' => 'app_users#create', :via => :post
       match 'update_user' => 'app_users#update_app_user', :via => :post
       match 'search_contact' => 'search_contacts#search_through_contact', :via => :post
+      match 'create_meeting' => 'meeting_details#create_meeting', :via => :post
     end
   end    
 
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :admin_users
   resources :app_users
-
+  resources :meeting_schedules
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

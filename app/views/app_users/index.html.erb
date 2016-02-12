@@ -14,8 +14,8 @@
       <th><strong>Email</strong></th>
       <th><strong>MobileNo.</strong></th>
       <th><strong>DeviceFlag</strong></th>
-      <!--<th><strong>AvatarURL</strong></th>-->
-      <th><strong>UnhashedPassword</strong></th>
+      <!--<th><strong>AvatarURL</strong></th>
+      <th><strong>UnhashedPassword</strong></th>-->
       <th><strong>DeviceToken</strong></th>
       <th><strong>Action</strong></th>
     </tr>
@@ -28,8 +28,8 @@
         <td><%= app_user.email %></td>
         <td><%= app_user.mobile_no %></td>
         <td><%= app_user.device_flag %></td>
-        <!--<td><%#= app_user.avatar.url %></td>-->
-        <td><%= app_user.unhashed_password %></td>
+        <!--<td><%#= app_user.avatar.url %></td>
+        <td><%#= app_user.unhashed_password %></td>-->
         <td><%= app_user.device_token %></td>
         <td><%= (link_to 'Edit', edit_app_user_path(app_user)) %> | <%= (link_to "Delete", app_user, method: :delete, data: { confirm: "You sure?" }) %></td>
       </tr>

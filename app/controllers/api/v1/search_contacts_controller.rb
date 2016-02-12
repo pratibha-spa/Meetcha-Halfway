@@ -5,13 +5,13 @@ class Api::V1::SearchContactsController < ApplicationController
 	def search_through_contact
 		#byebug
 		contact_no_array = params[:contact_no_array]#.split(/,/)
-		contact_no_found = []
+		@contact_no_found = []
 		contact_no_array.each do |contact|
 			@app_user = AppUser.find_by_mobile_no(contact)
 			if @app_user.present?
-				contact_no_found << contact
+				@contact_no_found << @app_user
 			end
 		end
-		render :json => { :contact_found => contact_no_found.as_json }
+		render :json => { :contact_found => @contact_no_found.as_json(:only => [:id, :mobile_no] ) }
 	end
 end	

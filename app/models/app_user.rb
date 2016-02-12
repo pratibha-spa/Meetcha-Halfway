@@ -13,4 +13,5 @@ class AppUser < ActiveRecord::Base
     json = super(opts)
     Hash[*json.map{|k, v| [k, v || ""]}.flatten]
   end
+
 end
