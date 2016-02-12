@@ -1,0 +1,43 @@
+<div class="current-page-banner">
+  <div id="current-page-item">Meeting Details</div>
+</div>
+<div class="index-list">
+<% if current_admin_user.role=='super_admin' || current_admin_user.role=='admin' %>
+  <!--<div class="pure-control-group search-box">
+      <input type="search" name="search-factory" placeholder="Search factories...">
+  </div>-->
+  <table cellpadding="10">
+    <thead>
+    <tr>
+      <th><strong>ID</strong></th>
+      <th><strong>RequestSenderId</strong></th>
+      <th><strong>RequestRecieverId</strong></th>
+      <th><strong>Address</strong></th>
+      <th><strong>Location</strong></th>
+      <th><strong>Latitude</strong></th>
+      <th><strong>Longitude</strong></th>
+      <th><strong>MeetingStatus</strong></th>
+      <th><strong>Action</strong></th>
+    </tr>
+    <thead>
+    <tbody>
+    <% @meetings.each do |meeting| %>
+      <tr>
+        <td><%= meeting.id %></td>
+        <td><%= meeting.m_request_sender_id %></td>
+        <td><%= meeting.m_request_receiver_id %></td>
+        <td><%= meeting.address %></td>
+        <td><%= meeting.location %></td>
+        <td><%= meeting.latitude %></td>
+        <td><%= meeting.longitude %></td>
+        <td><%= meeting.meeting_status %></td>
+        <td><%= (link_to "Delete", meeting, method: :delete, data: { confirm: "You sure?" }) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="alert-danger">You don't have permission to data.</p>
+<% end %>
+
+</div>

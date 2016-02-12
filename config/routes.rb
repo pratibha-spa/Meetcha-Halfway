@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :admin_users
   resources :app_users
-  resources :meeting_schedules
+  resources :meeting_details
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
