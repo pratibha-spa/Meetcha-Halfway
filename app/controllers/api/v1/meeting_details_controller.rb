@@ -4,12 +4,10 @@ class Api::V1::MeetingDetailsController < ApplicationController
 
 	def create_meeting
 		@meeting = MeetingDetail.new(meeting_detail_params)
-		respond_to do |format|
 			if @meeting.save
-				format.json { render :json => { :success => true, :meeting_id => @meeting.id } 
-										}
+				render :status => 200,
+               		   :json => { :success => true, :meeting_id => @meeting.id }										
 			end
-		end
 	end
 
 	private
