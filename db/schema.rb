@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211052627) do
+ActiveRecord::Schema.define(version: 20160216085646) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -56,6 +56,18 @@ ActiveRecord::Schema.define(version: 20160211052627) do
 
   add_index "app_users", ["mobile_no"], name: "index_app_users_on_mobile_no", unique: true, using: :btree
   add_index "app_users", ["reset_password_token"], name: "index_app_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "journey_updates", force: :cascade do |t|
+    t.integer  "meeting_detail_id", limit: 4
+    t.integer  "app_user_id",       limit: 4
+    t.decimal  "latitude",                    precision: 18, scale: 14
+    t.decimal  "longitude",                   precision: 18, scale: 14
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+  end
+
+  add_index "journey_updates", ["app_user_id"], name: "index_journey_updates_on_app_user_id", using: :btree
+  add_index "journey_updates", ["meeting_detail_id"], name: "index_journey_updates_on_meeting_detail_id", using: :btree
 
   create_table "meeting_details", force: :cascade do |t|
     t.integer  "m_request_sender_id",   limit: 4,                                             null: false

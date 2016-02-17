@@ -1,0 +1,37 @@
+<div class="current-page-banner">
+  <div id="current-page-item">All Journeys</div>
+</div>
+<div class="index-list">
+<% if current_admin_user.role=='super_admin' || current_admin_user.role=='admin' %>
+  <!--<div class="pure-control-group search-box">
+      <input type="search" name="search-factory" placeholder="Search factories...">
+  </div>-->
+  <table cellpadding="10">
+    <thead>
+    <tr>
+      <th><strong>ID</strong></th>
+      <th><strong>Meeting ID</strong></th>
+      <th><strong>App User ID</strong></th>
+      <th><strong>Latitude</strong></th>
+      <th><strong>Longitude</strong></th>
+      <th><strong>Action</strong></th>
+    </tr>
+    <thead>
+    <tbody>
+    <% @journeys.each do |journey| %>
+      <tr>
+        <td><%= journey.id %></td>
+        <td><%= journey.meeting_detail_id %></td>
+        <td><%= journey.app_user_id %></td>
+        <td><%= journey.latitude %></td>
+        <td><%= journey.longitude %></td>
+        <td><%= (link_to "Delete", journey, method: :delete, data: { confirm: "Are you sure?" }) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="alert-danger">You don't have permission to data.</p>
+<% end %>
+
+</div>
