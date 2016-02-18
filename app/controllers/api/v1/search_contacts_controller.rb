@@ -14,4 +14,20 @@ class Api::V1::SearchContactsController < ApplicationController
 		end
 		render :json => { :contact_found => @contact_no_found.as_json(:only => [:id, :mobile_no] ) }
 	end
+
+	def show_meeting_history
+		if params[:m_request_receiver_id].present?
+			@meeting_history = MeetingDetail.where("m_request_receiver_id = ? AND meeting_status = ?", params[:m_request_receiver_id], false)
+			if @meeting_history.present?
+				render :status => 200,
+               :json => { :success => true, :meeting_history => @meeting_history.as_json(:except => [:created_at, :updated_at]) }
+			else
+			render :status => 400,
+               :json => { :success => false }
+			end
+		else
+			render :status => 400,
+               :json => { :success => false }
+		end
+	end
 end	
