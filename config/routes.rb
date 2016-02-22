@@ -13,9 +13,11 @@ Rails.application.routes.draw do
       match 'update_user' => 'app_users#update_app_user', :via => :post
       match 'search_contact' => 'search_contacts#search_through_contact', :via => :post
       match 'create_meeting' => 'meeting_details#create_meeting', :via => :post
+      match 'update_meeting' => 'meeting_details#update_meeting', :via => :post
       match 'update_your_location' => 'journey_updates#save_your_current_location', :via => :post
       match 'fetch_location' => 'journey_updates#fetch_others_current_location', :via => :get
       match 'meeting_history' => 'search_contacts#show_meeting_history', :via => :get
+
     end
   end    
 
