@@ -3,7 +3,6 @@ class Api::V1::SearchContactsController < ApplicationController
 	respond_to :json
 
 	def search_through_contact
-		#byebug
 		contact_no_array = params[:contact_no_array]#.split(/,/)
 		@contact_no_found = []
 		contact_no_array.each do |contact|
