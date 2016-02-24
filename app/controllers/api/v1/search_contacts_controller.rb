@@ -16,7 +16,7 @@ class Api::V1::SearchContactsController < ApplicationController
 
 	def show_meeting_history
 		if params[:m_request_receiver_id].present?
-			@meeting_history = MeetingDetail.where("m_request_receiver_id = ? AND meeting_status = ?", params[:m_request_receiver_id], false)
+			@meeting_history = MeetingDetail.where("m_request_receiver_id = ? AND meeting_status = ? AND created_at >= ?", params[:m_request_receiver_id], false, Time.zone.now.beginning_of_day)
 			if @meeting_history.present?
 				render :status => 200,
                :json => { :success => true, :meeting_history => @meeting_history.as_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]) }
