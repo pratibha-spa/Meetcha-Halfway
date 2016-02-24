@@ -6,13 +6,14 @@ class Api::V1::MeetingDetailsController < ApplicationController
 		if params[:m_request_receiver_id].present?
 			@app_user = AppUser.where("id = ?", params[:m_request_receiver_id] ).take
 			@meeting_detail = MeetingDetail.new(meeting_detail_params)
-			msg = @meeting_detail.to_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]).gsub!(/\"/, '\'')
+			#msg = @meeting_detail.to_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]).gsub!(/\"/, '\'')
 			if @meeting_detail.save
+        msg = @meeting_detail.to_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]).gsub!(/\"/, '\'')
 				if @app_user.device_flag == "android"
 					gcm = GCM.new("AIzaSyCIo28DiHymK67pRjg9Cw57MC1rjBEDX_I")
     			registration_id = ["#{@app_user.device_token}"]
     			gcm.send(registration_id, {data: {message: "#{msg}"}})
-    		elsif @app_user.device_flag == "iphone"
+    		elsif @app_user.device_flag == "iPhone"
 					pusher = Grocer.pusher(
         		certificate: "#{Rails.root}/config/certificates/DevPush_Meetcha.pem",      	# required
         		passphrase:  "12345",                       																	# optional
@@ -51,11 +52,11 @@ class Api::V1::MeetingDetailsController < ApplicationController
 				@meeting_detail.meeting_status = true
 				@meeting_detail.save!
 				@confirmation_receiver = AppUser.find_by_id(@meeting_detail.m_request_sender_id)
-				if @confirmation_receiver.device_flag == "android"
+				if @confirmation_receiver.device_token == "android"
 					gcm = GCM.new("AIzaSyCIo28DiHymK67pRjg9Cw57MC1rjBEDX_I")
     			registration_id = ["#{@confirmation_receiver.device_token}"]
     			gcm.send(registration_id, {data: {message: "#{@confirmation_receiver.app_user_name} has accepted your meeting request."}})
-    		elsif @app_user.device_flag == "iphone"
+    		elsif @confirmation_receiver.device_token == "iPhone"
 					pusher = Grocer.pusher(
         		certificate: "#{Rails.root}/config/certificates/DevPush_Meetcha.pem",      	# required
         		passphrase:  "12345",                       																# optional
