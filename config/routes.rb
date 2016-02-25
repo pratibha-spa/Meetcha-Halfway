@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       match 'update_your_location' => 'journey_updates#save_your_current_location', :via => :post
       match 'fetch_location' => 'journey_updates#fetch_others_current_location', :via => :get
       match 'meeting_history' => 'search_contacts#show_meeting_history', :via => :get
-
+      match 'confirm_meeting' => 'meeting_details#meeting_accept_notification', :via => :get
     end
   end    
 

@@ -23,7 +23,7 @@ class Api::V1::JourneyUpdatesController < ApplicationController
 						gcm = GCM.new("AIzaSyC7tEx94lVkuevlmRu2g5CDXQkX7exMyw0")
     				registration_id = ["#{@app_user.device_token}"]
     				gcm.send(registration_id, {data: {message: "#{@app_user.app_user_name} has started journey."}})
-    			elsif @app_user.device_flag == "iphone"
+    			elsif @app_user.device_flag == "iPhone"
 						pusher = Grocer.pusher(
         			certificate: "#{Rails.root}/config/certificates/DevPush_Meetcha.pem",      	# required
         			passphrase:  "12345",                       																	# optional

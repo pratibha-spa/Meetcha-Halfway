@@ -52,11 +52,11 @@ class Api::V1::MeetingDetailsController < ApplicationController
 				@meeting_detail.meeting_status = true
 				@meeting_detail.save!
 				@confirmation_receiver = AppUser.find_by_id(@meeting_detail.m_request_sender_id)
-				if @confirmation_receiver.device_token == "android"
+				if @confirmation_receiver.device_flag == "android"
 					gcm = GCM.new("AIzaSyCIo28DiHymK67pRjg9Cw57MC1rjBEDX_I")
     			registration_id = ["#{@confirmation_receiver.device_token}"]
     			gcm.send(registration_id, {data: {message: "#{@confirmation_receiver.app_user_name} has accepted your meeting request."}})
-    		elsif @confirmation_receiver.device_token == "iPhone"
+    		elsif @confirmation_receiver.device_flag == "iPhone"
 					pusher = Grocer.pusher(
         		certificate: "#{Rails.root}/config/certificates/DevPush_Meetcha.pem",      	# required
         		passphrase:  "12345",                       																# optional
@@ -87,6 +87,22 @@ class Api::V1::MeetingDetailsController < ApplicationController
                :json => { :success => false }
 		end	
 	end
+
+  def meeting_accept_notification
+    if params[:meeting_detail_id].present? && params[:m_request_sender_id].present?
+      @meeting_detail = MeetingDetail.where("id = ? AND m_request_sender_id = ?", params[:meeting_detail_id], params[:m_request_sender_id] ).take
+      if @meeting_detail.meeting_status == true
+         render :status => 200,
+             :json => { :success => true, :meeting_detail => @meeting_detail.as_json(:except => [:created_at, :updated_at]) }
+      else
+        render :status => 400,
+             :json => { :success => false }
+      end
+    else
+      render :status => 400,
+             :json => { :success => false }
+    end
+  end
 
 	private
 	def meeting_detail_params
