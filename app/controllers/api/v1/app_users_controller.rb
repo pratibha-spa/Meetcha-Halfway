@@ -22,6 +22,39 @@ class Api::V1::AppUsersController < ApplicationController
     end 
   end
 
+  def change_password
+    if params[:app_user_id].present? && params[:password].present?
+      @app_user = AppUser.find_by_id(params[:app_user_id])
+      if @app_user.present? 
+        #@app_user.update(app_user_params)
+        @app_user.password = params[:password]
+        @app_user.unhashed_password = params[:password]
+        @app_user.save!
+        render :status => 200,
+               :json => { :success => true }
+      else
+        render :status => 400,
+             :json => { :success => false }
+      end
+    else
+      render :status => 400,
+             :json => { :success => false }
+    end
+  end
+
+  def recover_password
+    @app_user = AppUser.find_by_mobile_no(params[:mobile_no])
+    if @app_user.present?
+      @email = @app_user.email
+      AppUserMailer.recover_password_email(@app_user).deliver_now
+      render  :json => { :success => true }
+    else
+      render  :status => 404,
+              :json => { :success => false }
+    end
+  end
+
+
   def create
     @app_user = AppUser.find_by_mobile_no(params[:mobile_no])
     if @app_user.present?

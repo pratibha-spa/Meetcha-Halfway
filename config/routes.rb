@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       match 'fetch_location' => 'journey_updates#fetch_others_current_location', :via => :get
       match 'meeting_history' => 'search_contacts#show_meeting_history', :via => :get
       match 'confirm_meeting' => 'meeting_details#meeting_accept_notification', :via => :get
+      match 'change_password' => 'app_users#change_password', :via => :post
+      match 'forget_password' => 'app_users#recover_password', :via => :post
     end
   end    
 
