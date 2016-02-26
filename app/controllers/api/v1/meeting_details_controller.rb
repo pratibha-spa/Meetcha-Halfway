@@ -89,11 +89,11 @@ class Api::V1::MeetingDetailsController < ApplicationController
 	end
 
   def meeting_accept_notification
-    if params[:meeting_detail_id].present? && params[:m_request_sender_id].present?
-      @meeting_detail = MeetingDetail.where("id = ? AND m_request_sender_id = ?", params[:meeting_detail_id], params[:m_request_sender_id] ).take
+    if params[:meeting_detail_id].present?
+      @meeting_detail = MeetingDetail.find_by_id(params[:meeting_detail_id] )
       if @meeting_detail.meeting_status == true
          render :status => 200,
-             :json => { :success => true, :meeting_detail => @meeting_detail.as_json(:except => [:created_at, :updated_at]) }
+             :json => { :success => true, :meeting_detail_id => @meeting_detail.as_json }
       else
         render :status => 400,
              :json => { :success => false }
