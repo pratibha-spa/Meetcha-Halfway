@@ -21,7 +21,7 @@ class Api::V1::SearchContactsController < ApplicationController
 				render :status => 200,
                :json => { :success => true, :meeting_history => @meeting_history.as_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]) }
 			else
-			render :status => 400,
+			render :status => 200,
                :json => { :success => false }
 			end
 		else

@@ -46,12 +46,12 @@ class Api::V1::JourneyUpdatesController < ApplicationController
         	render :status => 200,
           	     :json => { :success => true }
       	else
-        	render :status => 400,
+        	render :status => 200,
           	     :json => { :success => false }
       	end
 			end
 		else
-			render :status => 400,
+			render :status => 200,
           	 :json => { :success => false }
 		end	
 	end
@@ -63,7 +63,7 @@ class Api::V1::JourneyUpdatesController < ApplicationController
 				render :status => 200,
                :json => { :success => true, :journey_update => @journey.as_json(:except => [:created_at, :updated_at]) }
 			else
-				render :status => 400,
+				render :status => 200,
                :json => { :success => false }
 			end
 		else

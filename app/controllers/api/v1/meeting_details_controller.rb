@@ -36,7 +36,7 @@ class Api::V1::MeetingDetailsController < ApplicationController
 				render :status => 200,
                		   :json => { :success => true, :meeting_id => @meeting_detail.id }										
 			else
-				render :status => 400,
+				render :status => 200,
                :json => { :success => false }
 			end
 		else
@@ -79,7 +79,7 @@ class Api::V1::MeetingDetailsController < ApplicationController
 				render :status => 200,
                		   			:json => { :success => true }
 			else
-				render :status => 400,
+				render :status => 200,
                :json => { :success => false }
 			end
 		else
@@ -95,7 +95,7 @@ class Api::V1::MeetingDetailsController < ApplicationController
          render :status => 200,
              :json => { :success => true, :meeting_detail_id => @meeting_detail.as_json }
       else
-        render :status => 400,
+        render :status => 200,
              :json => { :success => false }
       end
     else

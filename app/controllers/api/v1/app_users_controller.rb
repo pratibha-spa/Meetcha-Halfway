@@ -33,7 +33,7 @@ class Api::V1::AppUsersController < ApplicationController
         render :status => 200,
                :json => { :success => true }
       else
-        render :status => 400,
+        render :status => 200,
              :json => { :success => false }
       end
     else
@@ -49,7 +49,7 @@ class Api::V1::AppUsersController < ApplicationController
       AppUserMailer.recover_password_email(@app_user).deliver_now
       render  :json => { :success => true, :email_id => @email }
     else
-      render  :status => 404,
+      render  :status => 200,
               :json => { :success => false }
     end
   end
@@ -58,7 +58,7 @@ class Api::V1::AppUsersController < ApplicationController
   def create
     @app_user = AppUser.find_by_mobile_no(params[:mobile_no])
     if @app_user.present?
-      render :status => 400,
+      render :status => 200,
              :json => {:success => false}
     else
       @app_user = AppUser.new(app_user_params) 
@@ -67,7 +67,7 @@ class Api::V1::AppUsersController < ApplicationController
         render :status => 200,
                :json => { :success => true, :app_user_id => @app_user.id }
       else
-        render :status => 400,
+        render :status => 200,
                :json => { :success => false }
       end
     end
