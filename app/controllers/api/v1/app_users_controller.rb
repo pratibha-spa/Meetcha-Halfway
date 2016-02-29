@@ -47,7 +47,7 @@ class Api::V1::AppUsersController < ApplicationController
     if @app_user.present?
       @email = @app_user.email
       AppUserMailer.recover_password_email(@app_user).deliver_now
-      render  :json => { :success => true }
+      render  :json => { :success => true, :email_id => @email }
     else
       render  :status => 404,
               :json => { :success => false }
