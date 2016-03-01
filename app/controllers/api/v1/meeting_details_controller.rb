@@ -52,11 +52,12 @@ class Api::V1::MeetingDetailsController < ApplicationController
 			if @meeting_detail.present?
 				@meeting_detail.meeting_status = true
 				@meeting_detail.save!
+        @meeting_receiver = AppUser.find_by_id(@meeting_detail.m_request_receiver_id)
 				@confirmation_receiver = AppUser.find_by_id(@meeting_detail.m_request_sender_id)
 				if @confirmation_receiver.device_flag == "android"
 					gcm = GCM.new("AIzaSyCIo28DiHymK67pRjg9Cw57MC1rjBEDX_I")
     			registration_id = ["#{@confirmation_receiver.device_token}"]
-    			gcm.send(registration_id, {data: {message: "#{@confirmation_receiver.app_user_name} has accepted your meeting request."}})
+    			gcm.send(registration_id, {data: {message: "#{@meeting_receiver.app_user_name} has accepted your meeting request."}})
     		elsif @confirmation_receiver.device_flag == "iPhone"
 					pusher = Grocer.pusher(
         		certificate: "#{Rails.root}/config/certificates/DevPush_Meetcha.pem",      	# required
