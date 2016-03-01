@@ -3,7 +3,8 @@ class Api::V1::MeetingDetailsController < ApplicationController
 	respond_to :json
 
 	def create_meeting
-		if params[:m_request_receiver_id].present?
+		if params[:m_request_receiver_id].present? && params[:m_request_sender_id].present?
+      @request_sender = AppUser.find_by_id(params[:m_request_sender_id])
 			@app_user = AppUser.where("id = ?", params[:m_request_receiver_id] ).take
 			@meeting_detail = MeetingDetail.new(meeting_detail_params)
 			#msg = @meeting_detail.to_json(:except => [:created_at, :updated_at], :methods => [:sender_mobile_no]).gsub!(/\"/, '\'')
@@ -23,9 +24,9 @@ class Api::V1::MeetingDetailsController < ApplicationController
       		)
       		notification = Grocer::Notification.new(
         		device_token:      "#{@app_user.device_token}",
-        		alert:             "#{msg}",
-        		badge:             42
-        		#category:          "a category",         																	# optional; used for custom notification actions
+        		alert:             "Meeting invitation from "+"#{@request_sender.mobile_no}." + "\n" + "Meeting Venue is "+"#{@meeting_detail.location}.",
+        		badge:             42,  
+        		category:          "#{msg}"         																	      # optional; used for custom notification actions
         		#sound:             "siren.aiff",         																	# optional
         		#expiry:            Time.now + 60*60,     																	# optional; 0 is default, meaning the message is not stored
         		#identifier:        1234,                 																	# optional; must be an integer
