@@ -14,6 +14,6 @@ class JourneyUpdatesController < ApplicationController
   end
   private
 	def journey_update_params
-		params.permit(:meeting_detail_id, :app_user_id, :latitude, :longitude)
+		params.permit(:meeting_detail_id, :app_user_id, :latitude, :longitude, :journey_status)
 	end
 end	

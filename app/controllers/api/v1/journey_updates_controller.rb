@@ -72,8 +72,26 @@ class Api::V1::JourneyUpdatesController < ApplicationController
 		end
 	end
 
+	def stop_journey
+		if params[:meeting_detail_id].present? && params[:app_user_id].present?
+			@journey = JourneyUpdate.where("meeting_detail_id =? AND app_user_id=?", params[:meeting_detail_id], params[:app_user_id] ).take
+			if @journey.present?
+				@journey.journey_status = 'false'
+				@journey.save!
+				render :status => 200,
+               :json => { :success => true }
+			else
+				render :status => 400,
+               :json => { :success => false }
+			end
+		else
+			render :status => 400,
+               :json => { :success => false }
+		end
+	end
+
 	private
 	def journey_update_params
-		params.permit(:meeting_detail_id, :app_user_id, :latitude, :longitude)
+		params.permit(:meeting_detail_id, :app_user_id, :latitude, :longitude, :journey_status)
 	end
 end	

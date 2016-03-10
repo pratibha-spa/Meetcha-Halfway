@@ -14,6 +14,7 @@
       <th><strong>App User ID</strong></th>
       <th><strong>Latitude</strong></th>
       <th><strong>Longitude</strong></th>
+      <th><strong>JourneyStatus</strong></th>
       <th><strong>Action</strong></th>
     </tr>
     <thead>
@@ -25,6 +26,7 @@
         <td><%= journey.app_user_id %></td>
         <td><%= journey.latitude %></td>
         <td><%= journey.longitude %></td>
+        <td><%= journey.journey_status %></td>
         <td><%= (link_to "Delete", journey, method: :delete, data: { confirm: "Are you sure?" }) %></td>
       </tr>
     <% end %>

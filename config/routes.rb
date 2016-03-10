@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       match 'confirm_meeting' => 'meeting_details#meeting_accept_notification', :via => :get
       match 'change_password' => 'app_users#change_password', :via => :post
       match 'forget_password' => 'app_users#recover_password', :via => :post
+      match 'stop_journey' => 'journey_updates#stop_journey', :via => :post
     end
   end    
 
